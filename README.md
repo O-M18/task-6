@@ -49,6 +49,29 @@ This project performs a comprehensive analysis of an online retail sales dataset
 
 ---
 
+## Sample query
+
+``` sql
+----- CONVERTING NEAGTIVE QUANTITY TO POSITIVE-----
+CREATE VIEW NEW_VIEW AS
+SELECT *, 
+CASE 
+WHEN Quantity<0 THEN Quantity*(-1)
+ELSE Quantity 
+END AS Quantities
+FROM NEW_SALES;
+```
+```sql
+SELECT  * FROM NEW_VIEW;
+------- TOTAL REVEUNE BY MONTH------
+ SELECT MONTHS,ROUND(SUM(REVENUE),2) TOTAL_REVENUE
+ FROM (SELECT *, (Quantities* Price) AS REVENUE FROM NEW_VIEW) AS S
+ GROUP BY MONTHS
+ ORDER BY 1;
+```
+
+---
+
 ## 📊  Insights
 
 - Most revenue is generated in **September to November**
